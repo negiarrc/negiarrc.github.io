@@ -22,6 +22,76 @@ npm run check
 
 ## コンテンツ追加方法
 
+### 固定ページ（`content/pages/**/*.mdx`）
+
+固定ページは `content/pages` 配下の MDX から自動生成されます。  
+ルーティングは `src/app/[[...slug]]/page.tsx` が担当します。
+
+#### URLマッピング規則（フォルダ構造 → URL）
+
+- `content/pages/index.mdx` → `/`
+- `content/pages/<dir>/index.mdx` → `/<dir>`
+- `content/pages/<dir>/<file>.mdx` → `/<dir>/<file>`
+- 例: `content/pages/company/team.mdx` → `/company/team`
+
+#### 固定ページ frontmatter
+
+必須:
+
+- `title`（string）
+
+任意:
+
+- `description`（string）
+- `navLabel`（string）
+- `showInHeader`（boolean）
+- `navOrder`（number）
+
+```mdx
+---
+title: "記事"
+description: "開発ログとロボコン記録の記事一覧。"
+navLabel: "記事"
+showInHeader: true
+navOrder: 2
+---
+```
+
+#### ヘッダーナビゲーションの挙動
+
+`src/app/layout.tsx` は `listHeaderNavigationPages()` の結果でヘッダーを構築します。
+
+- `showInHeader: true` のページだけ表示
+- ラベルは `navLabel` があれば優先（未指定時は `title`）
+- 並び順は `navOrder` 昇順、同値/未指定時は `pathname` → `title` 順
+
+#### 固定ページの追加手順（ヘッダー表示まで）
+
+1. `content/pages` 配下に `.mdx` を追加（URLは上記規則で決定）
+2. frontmatter に `title` を設定
+3. ヘッダーに出す場合は `showInHeader: true` を設定
+4. 必要に応じて `navLabel`, `navOrder` で表示名/順序を調整
+
+#### 固定ページMDXで使える一覧ブロック（import不要）
+
+`src/mdx-components.tsx` に登録済みのため、`content/pages/**/*.mdx` でそのまま使えます。
+
+- `ArticleListBlock`：記事一覧の汎用ブロック（新規利用はこれを推奨）
+  - `category?: string`（省略時は全記事）
+  - `variant?: "card" | "text"`（省略時は `"card"`）
+  - `emptyMessage?: string`
+- `SocialBannerBlock`：`src/content/socialLinks.ts` のSNSバナー一覧
+
+```mdx
+{/* roboconカテゴリの記事一覧（カード表示） */}
+<ArticleListBlock category="robocon" />
+
+{/* 全記事一覧（category省略 + テキスト表示） */}
+<ArticleListBlock variant="text" emptyMessage="公開されている記事はまだありません。" />
+```
+
+`RoboconArticleCardsBlock` と `AllArticlesTextListBlock` は互換性維持のためのラッパーです。新しいMDXでは `ArticleListBlock` を優先してください。
+
 ### SNS / サイトバナー
 
 `src/content/socialLinks.ts` を編集します。
@@ -33,34 +103,15 @@ npm run check
 
 > 初期値はプレースホルダURLなので、公開前に実アカウントへ置き換えてください。
 
-### レイアウト共通化（ヘッダー/フッター）
-
-Next.js App Router の `src/app/layout.tsx` で共通ヘッダー/フッターを管理しています。  
-ページを追加する場合は `src/app/<route>/page.tsx` を作成してください。`layout.tsx` の内容は自動で共通適用されます。
-
-### ページタイトルとアイコン
-
-- 共通タイトルテンプレートは `src/app/layout.tsx` の `metadata.title` で管理します。
-- ルート以外でページ固有タイトルを付ける場合は、サーバーコンポーネントの `src/app/<route>/page.tsx` で `export const metadata` を定義します。
-- サイトアイコンは `src/app/favicon.ico` と `src/app/apple-icon.png` を使用します。
-
-### ロボット画像と説明
-
-1. 画像を `public/images/robots/` に配置
-2. `src/content/robots.ts` に1件追加
-
-項目:
-
-- `name`, `year`, `role`, `description`
-- `imagePath`（例: `/images/robots/my-robot.jpg`）
-- `imageAlt`
-
-カードをクリックするとモーダルで拡大表示されます。
-
 ### 記事（Markdown / MDX）管理
 
 記事は `content/articles/<category>/<slug>.mdx` に置きます。  
-**記事の追加・更新は MDX ファイル編集だけで完結**し、コンポーネント側の追記は不要です。
+記事詳細URLは **`/articles/<category>/<slug>`** です（`src/app/articles/[category]/[slug]/page.tsx`）。
+
+記事データの読み込みは `src/lib/articles/loader.ts` で行い、以下を使い分けます。
+
+- `listAllArticlesMetadata()`：全記事一覧
+- `listArticlesMetadataByCategory(category)`：カテゴリ絞り込み一覧
 
 #### フォルダ/ファイル規約
 
@@ -84,6 +135,13 @@ slug: "my-article-slug"
 
 - `title`, `thumbnail`, `publishedAt`, `excerpt`, `category`, `slug` は必須です。
 - `publishedAt` は日付として解釈可能な文字列を指定してください。
+
+### ページタイトルとアイコン
+
+- 共通タイトルテンプレートは `src/app/layout.tsx` の `metadata.title` で管理します。
+- 固定ページのタイトル/descriptionは `content/pages/**/*.mdx` の frontmatter（`title`, `description`）で設定します。
+- 記事詳細ページのタイトル/descriptionは記事 frontmatter から生成されます。
+- サイトアイコンは `src/app/favicon.ico` と `src/app/apple-icon.png` を使用します。
 
 ## GitHub Pages 公開
 

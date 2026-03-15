@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { HeaderNavigation } from "@/components/HeaderNavigation";
 import { socialLinks } from "@/content/socialLinks";
+import { listHeaderNavigationPages } from "@/lib/pages/loader";
 import "./globals.css";
 
 type RootLayoutProps = {
@@ -18,6 +20,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: RootLayoutProps) {
   const currentYear = new Date().getFullYear();
   const footerBannerLinks = socialLinks.filter((link) => link.showInBanner);
+  const headerNavigationItems = listHeaderNavigationPages().map((page) => ({
+    pathname: page.pathname,
+    label: page.navLabel ?? page.title,
+  }));
 
   return (
     <html lang="ja">
@@ -25,11 +31,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className="flex min-h-screen flex-col bg-[var(--bg)] text-[var(--text)]">
           <header className="border-b border-[var(--border)] bg-[var(--surface)]">
             <div className="mx-auto w-full max-w-6xl px-4 py-6">
-              <div className="space-y-2">
-                <h1 className="text-2xl font-bold sm:text-3xl">
-                  <a href="/">__negi__</a>
-                </h1>
-              </div>
+              <HeaderNavigation siteTitle="__negi__" items={headerNavigationItems} />
             </div>
           </header>
 

@@ -132,7 +132,7 @@ export default async function Page({ params }: ArticlePageProps) {
     <article className="space-y-8">
       <header className="space-y-4 border-b border-[var(--border)] pb-6">
         <p className="text-sm text-[var(--text-subtle)]">
-          <a href="/">記事一覧</a> / {article.metadata.category}
+          <a href="/articles">記事一覧</a> / {article.metadata.category}
         </p>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--text-subtle)]">
