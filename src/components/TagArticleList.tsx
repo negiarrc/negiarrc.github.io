@@ -1,17 +1,10 @@
 import type { ArticleMetadata } from "@/types/article";
-import type { Robot } from "@/types/content";
 
 const articleDateFormatter = new Intl.DateTimeFormat("ja-JP", {
   year: "numeric",
   month: "2-digit",
   day: "2-digit",
 });
-
-type RobotImageListProps = {
-  robots: Robot[];
-  onSelectRobot: (robot: Robot) => void;
-  className?: string;
-};
 
 type ArticleListProps = {
   articles: ArticleMetadata[];
@@ -26,57 +19,15 @@ function articleHref(article: ArticleMetadata): string {
 function ArticleMeta({ article }: { article: ArticleMetadata }) {
   return (
     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-subtle)]">
-      <span className="border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-0.5">
-        {article.category}
-      </span>
+      <a href={`/categories/${article.category}`}>
+        <span className="border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-0.5">
+          {article.category}
+        </span>
+      </a>
       <time dateTime={article.publishedAt.toISOString()}>
         {articleDateFormatter.format(article.publishedAt)}
       </time>
     </div>
-  );
-}
-
-export function RobotImageList({
-  robots,
-  onSelectRobot,
-  className,
-}: RobotImageListProps) {
-  const baseClassName =
-    className ?? "grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3";
-
-  if (robots.length === 0) {
-    return (
-      <p className="text-sm text-[var(--text-subtle)]">
-        掲載できるロボット情報はまだありません。
-      </p>
-    );
-  }
-
-  return (
-    <ul className={baseClassName}>
-      {robots.map((robot) => (
-        <li key={robot.id}>
-          <button
-            type="button"
-            onClick={() => onSelectRobot(robot)}
-            className="w-full border border-[var(--border)] bg-[var(--surface)] p-3 text-left"
-            aria-label={`${robot.name} の画像を拡大`}
-          >
-            <img
-              src={robot.imagePath}
-              alt={robot.imageAlt}
-              className="aspect-[4/3] w-full border border-[var(--border)] object-cover"
-            />
-            <p className="mt-3 text-xs text-[var(--text-subtle)]">{robot.year}</p>
-            <h3 className="mt-1 text-base font-semibold">{robot.name}</h3>
-            <p className="mt-1 text-sm text-[var(--text-subtle)]">{robot.role}</p>
-            <p className="mt-3 text-sm text-[var(--text-subtle)]">
-              {robot.description}
-            </p>
-          </button>
-        </li>
-      ))}
-    </ul>
   );
 }
 

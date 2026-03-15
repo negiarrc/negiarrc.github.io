@@ -132,13 +132,18 @@ export default async function Page({ params }: ArticlePageProps) {
     <article className="space-y-8">
       <header className="space-y-4 border-b border-[var(--border)] pb-6">
         <p className="text-sm text-[var(--text-subtle)]">
-          <a href="/articles">記事一覧</a> / {article.metadata.category}
+          <a href="/articles">記事一覧</a> /
+          <a href={`/categories/${article.metadata.category}`}>
+            {article.metadata.category}
+          </a>
         </p>
 
         <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--text-subtle)]">
-          <span className="border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-0.5">
-            {article.metadata.category}
-          </span>
+          <a href={`/categories/${article.metadata.category}`}>
+            <span className="border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-0.5">
+              {article.metadata.category}
+            </span>
+          </a>
           <time dateTime={article.metadata.publishedAt.toISOString()}>
             {formatArticleDate(article.metadata.publishedAt)}
           </time>

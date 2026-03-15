@@ -41,19 +41,9 @@ export function ArticleListBlock({
   return <ArticleCardList articles={articles} emptyMessage={emptyMessage} />;
 }
 
-export function RoboconArticleCardsBlock({
+export function AllArticlesTextListBlock({
   emptyMessage,
 }: LegacyListingBlockProps) {
-  return (
-    <ArticleListBlock
-      category="robocon"
-      variant="card"
-      emptyMessage={emptyMessage ?? "ロボコン関連の記事はまだありません。"}
-    />
-  );
-}
-
-export function AllArticlesTextListBlock({ emptyMessage }: LegacyListingBlockProps) {
   return (
     <ArticleListBlock
       variant="text"

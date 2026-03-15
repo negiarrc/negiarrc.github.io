@@ -78,7 +78,7 @@ img {
 }
 
 .article-mdx a {
-  text-decoration: underline;
+  text-decoration: none;
   text-underline-offset: 2px;
 }
 

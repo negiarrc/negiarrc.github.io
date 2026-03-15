@@ -106,7 +106,9 @@ navOrder: 2
 ### 記事（Markdown / MDX）管理
 
 記事は `content/articles/<category>/<slug>.mdx` に置きます。  
-記事詳細URLは **`/articles/<category>/<slug>`** です（`src/app/articles/[category]/[slug]/page.tsx`）。
+記事詳細URLは **`/articles/<category>/<slug>`** です（`src/app/articles/[category]/[slug]/page.tsx`）。  
+カテゴリ別記事一覧URLは **`/categories/<category>`** です（`src/app/categories/[category]/page.tsx`）。
+`src/app/categories/[category]/page.tsx` の `generateStaticParams()` は、記事 frontmatter の `category` 値（`listAllArticlesMetadata()` で取得）をユニーク化して、既存カテゴリ分のみ `/categories/<category>` を静的生成します（存在しないカテゴリは 404）。
 
 記事データの読み込みは `src/lib/articles/loader.ts` で行い、以下を使い分けます。
 

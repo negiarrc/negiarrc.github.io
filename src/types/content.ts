@@ -5,13 +5,3 @@ export type SocialLink = {
   handle: string
   showInBanner: boolean
 }
-
-export type Robot = {
-  id: string
-  name: string
-  year: string
-  role: string
-  description: string
-  imagePath: string
-  imageAlt: string
-}

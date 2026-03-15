@@ -15,6 +15,7 @@
 - Fixed site pages are authored in `content/pages/**/*.mdx` and rendered by `src/app/[[...slug]]/page.tsx`.
 - Site page URL mapping is file-structure based: `index.mdx` maps to the directory root, and non-`index` file names become the last URL segment.
 - Article detail pages are served by `src/app/articles/[category]/[slug]/page.tsx` at `/articles/<category>/<slug>`.
+- Category summary pages are served by `src/app/categories/[category]/page.tsx` at `/categories/<category>`.
 - Content is data-driven:
   - `src/content/socialLinks.ts` defines SNS/site banner data, including `showInBanner` for banner/footer link visibility.
   - `content/pages/**/*.mdx` stores fixed page content and page frontmatter.
@@ -35,6 +36,7 @@
 - Site page paths are derived from file paths under `content/pages`: `.../index.mdx` maps to directory root; non-`index` file names become URL segments.
 - For article files, keep `category` aligned with directory name and `slug` aligned with file name.
 - Article detail pages must remain addressable at `/articles/<category>/<slug>`.
+- Category summary routes are statically generated from existing article frontmatter `category` values (`listAllArticlesMetadata()`); unknown categories should resolve to 404.
 - Required article frontmatter fields: `title`, `thumbnail`, `publishedAt`, `excerpt`, `category`, `slug`.
 - In site-page MDX, prefer `ArticleListBlock` for article listings:
   - Robocon cards: `<ArticleListBlock category="robocon" />`
