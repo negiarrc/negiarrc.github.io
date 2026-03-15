@@ -1,0 +1,78 @@
+import { RobotSection } from "@/components/RobotSection";
+import { SocialBannerList } from "@/components/SocialBannerList";
+import { socialLinks } from "@/content/socialLinks";
+import { listAllArticlesMetadata } from "@/lib/articles/loader";
+
+export const metadata = {
+  title: "Home | __negi__",
+};
+
+{(() => {
+  const articles = listAllArticlesMetadata();
+  const articleDateFormatter = new Intl.DateTimeFormat("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+
+  return (
+    <div className="space-y-10">
+      <section className="space-y-4">
+        <h2 className="border-b border-[var(--border)] pb-2 text-xl font-semibold">
+          自己紹介
+        </h2>
+        <p>
+          明石工業高等専門学校(2021~2025) <br />
+          豊橋技術科学大学(2026~) <br />
+          高専ロボコン(2021~2024) <br />
+          学生ロボコン(2027) <br />
+          機械班
+        </p>
+      </section>
+
+      <RobotSection />
+
+      <section className="space-y-4">
+        <h2 className="border-b border-[var(--border)] pb-2 text-xl font-semibold">
+          記事一覧
+        </h2>
+        {articles.length === 0 ? (
+          <p className="text-sm text-[var(--text-subtle)]">
+            まだ公開されている記事はありません。
+          </p>
+        ) : (
+          <ul className="space-y-3">
+            {articles.map((article) => (
+              <li key={`${article.category}-${article.slug}`}>
+                <a
+                  href={`/articles/${article.category}/${article.slug}`}
+                  className="block border border-[var(--border)] bg-[var(--surface)] p-4"
+                >
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-[var(--text-subtle)]">
+                    <span className="border border-[var(--border)] bg-[var(--surface-muted)] px-2 py-0.5">
+                      {article.category}
+                    </span>
+                    <time dateTime={article.publishedAt.toISOString()}>
+                      {articleDateFormatter.format(article.publishedAt)}
+                    </time>
+                  </div>
+                  <h3 className="mt-2 text-base font-semibold">{article.title}</h3>
+                  <p className="mt-2 text-sm text-[var(--text-subtle)]">
+                    {article.excerpt}
+                  </p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="border-b border-[var(--border)] pb-2 text-xl font-semibold">
+          SNS / Site
+        </h2>
+        <SocialBannerList links={socialLinks} />
+      </section>
+    </div>
+  );
+})()}

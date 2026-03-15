@@ -3,6 +3,7 @@ export type SocialLink = {
   name: string
   url: string
   handle: string
+  showInBanner: boolean
 }
 
 export type Robot = {

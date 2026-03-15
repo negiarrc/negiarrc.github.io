@@ -5,9 +5,11 @@ type SocialBannerListProps = {
 };
 
 export function SocialBannerList({ links }: SocialBannerListProps) {
+  const bannerLinks = links.filter((link) => link.showInBanner);
+
   return (
     <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      {links.map((link) => (
+      {bannerLinks.map((link) => (
         <li key={link.id}>
           <a
             href={link.url}
