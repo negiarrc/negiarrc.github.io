@@ -24,3 +24,6 @@ out
 *.njsproj
 *.sln
 *.sw?
+
+#WIP
+wip/

@@ -4,7 +4,7 @@
 ## 技術スタック
 
 - Next.js + React + TypeScript
-- Tailwind CSS
+- Tailwind CSS v4.2
 - GitHub Pages（GitHub Actionsデプロイ）
 
 ## ローカル開発
@@ -19,6 +19,14 @@ npm run dev
 ```bash
 npm run check
 ```
+
+## Tailwind CSS v4.2 設定
+
+このプロジェクトは Tailwind CSS **v4.2** 前提です。設定は次を基準にしてください。
+
+- PostCSS は `@tailwindcss/postcss` を使用（`postcss.config.js`）。
+- グローバルCSSは `src/app/globals.css` で `@import "tailwindcss";` を使用。
+- 旧v3形式（`@tailwind base/components/utilities` や `tailwindcss` プラグイン指定）は使わない。
 
 ## コンテンツ追加方法
 

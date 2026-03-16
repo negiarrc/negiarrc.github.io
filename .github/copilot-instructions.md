@@ -26,6 +26,7 @@
 - Legacy wrappers `RoboconArticleCardsBlock` / `AllArticlesTextListBlock` remain for compatibility, but new MDX should prefer `ArticleListBlock`.
 - UI sections are split into focused components (`HeaderNavigation`, `SocialBannerList`, `TagArticleList`).
 - Theme behavior is CSS-driven in `src/app/globals.css`, with light variables in `:root` and dark variables under `@media (prefers-color-scheme: dark)`.
+- Tailwind setup targets v4.2: load Tailwind in `src/app/globals.css` via `@import "tailwindcss";` and use `@tailwindcss/postcss` in `postcss.config.js`.
 - Deployment is workflow-driven via `.github/workflows/deploy-pages.yml` (`main` push -> `npm run check` -> deploy `out` artifact).
 
 ## Repo-specific conventions
@@ -46,6 +47,7 @@
 - The homepage robocon section is driven by `listArticlesMetadataByCategory("robocon")`; categorize relevant articles as `robocon` to show them there.
 - Add robot images under `public/images/robots/` and reference them with absolute paths like `/images/robots/<file>`.
 - Styling uses Tailwind utility classes plus CSS variables (`bg-[var(--bg)]`, `text-[var(--text)]`, etc.) rather than a custom Tailwind theme extension.
+- Keep Tailwind config in v4.2 style; do not reintroduce legacy v3 directives (`@tailwind base/components/utilities`) or `tailwindcss` PostCSS plugin wiring.
 - Follow the project’s design constraints from README: simple UI with no gradients, no rounded corners, and no animations.
 - For external links, keep `target="_blank"` with `rel="noopener noreferrer"` (as in `SocialBannerList`).
 - Footer SNS links are rendered from the same social link config and displayed as `|`-separated service names.

@@ -5,6 +5,7 @@ import {
   AllArticlesTextListBlock,
   SocialBannerBlock,
 } from "@/components/SitePageListingBlocks";
+import { MdxImageWithPopup } from "@/components/MdxImageWithPopup";
 
 export const sharedMdxComponents = {
   ArticleListBlock,
@@ -12,6 +13,7 @@ export const sharedMdxComponents = {
   ArticleTextList,
   AllArticlesTextListBlock,
   SocialBannerBlock,
+  img: MdxImageWithPopup,
 } satisfies MDXComponents;
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {

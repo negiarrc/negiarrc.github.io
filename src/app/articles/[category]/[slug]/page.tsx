@@ -150,15 +150,6 @@ export default async function Page({ params }: ArticlePageProps) {
         </div>
 
         <h1 className="text-3xl font-bold">{article.metadata.title}</h1>
-        {/* <p className="text-sm text-[var(--text-subtle)]">
-          {article.metadata.excerpt}
-        </p>
-
-        <img
-          src={article.metadata.thumbnail}
-          alt={`${article.metadata.title} thumbnail`}
-          className="w-full border border-[var(--border)] bg-[var(--surface)]"
-        /> */}
       </header>
 
       <div className="article-mdx">{articleBody}</div>

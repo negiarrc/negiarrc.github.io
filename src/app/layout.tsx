@@ -31,11 +31,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div className="flex min-h-screen flex-col bg-[var(--bg)] text-[var(--text)]">
           <header className="border-b border-[var(--border)] bg-[var(--surface)]">
             <div className="mx-auto w-full max-w-6xl px-4 py-6">
-              <HeaderNavigation siteTitle="__negi__" items={headerNavigationItems} />
+              <HeaderNavigation
+                siteTitle="__negi__"
+                items={headerNavigationItems}
+              />
             </div>
           </header>
 
-          <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+          <main className="md:ml-10 w-full max-w-3xl flex-1 px-4 py-8">
             {children}
           </main>
 
