@@ -24,7 +24,8 @@ export function MdxImageWithPopup({
   const imageSrc = typeof src === "string" ? src : "";
   const canOpenPopup = imageSrc.length > 0;
   const altText = alt.trim();
-  const openLabel = ariaLabel ?? (altText ? `${altText} を拡大表示` : "画像を拡大表示");
+  const openLabel =
+    ariaLabel ?? (altText ? `${altText} を拡大表示` : "画像を拡大表示");
   const popupLabel = altText ? `${altText} の拡大画像` : "拡大画像";
   const popupLinkLabel = altText
     ? `${altText} を新しいタブで開く`
@@ -53,6 +54,14 @@ export function MdxImageWithPopup({
     .filter(Boolean)
     .join(" ");
 
+  const handleBackdropClick = () => {
+    setIsPopupOpen(false);
+  };
+
+  const handlePopupContentClick = (event: MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };
+
   return (
     <>
       <img
@@ -73,8 +82,12 @@ export function MdxImageWithPopup({
           role="dialog"
           aria-modal="true"
           aria-label={popupLabel}
+          onClick={handleBackdropClick}
         >
-          <div className="flex max-h-full max-w-full flex-col gap-3">
+          <div
+            className="flex max-h-full max-w-full flex-col gap-3"
+            onClick={handlePopupContentClick}
+          >
             <button
               type="button"
               className="self-end border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-sm"

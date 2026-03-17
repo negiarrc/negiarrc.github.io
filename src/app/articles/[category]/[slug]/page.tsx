@@ -129,7 +129,7 @@ export default async function Page({ params }: ArticlePageProps) {
   const articleBody = await renderArticleBody(article.content);
 
   return (
-    <article className="space-y-8">
+    <article className="space-y-8 ">
       <header className="space-y-4 border-b border-[var(--border)] pb-6">
         <p className="text-sm text-[var(--text-subtle)]">
           <a href="/articles">記事一覧</a> /

@@ -38,7 +38,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </div>
           </header>
 
-          <main className="md:ml-10 w-full max-w-3xl flex-1 px-4 py-8">
+          <main className="mx-auto w-full max-w-3xl  flex-1 px-4 py-8">
             {children}
           </main>
 

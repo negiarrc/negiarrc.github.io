@@ -14,6 +14,7 @@ export const sharedMdxComponents = {
   AllArticlesTextListBlock,
   SocialBannerBlock,
   img: MdxImageWithPopup,
+  a: (props) => <a className="underline hover:no-underline" {...props} />,
 } satisfies MDXComponents;
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
